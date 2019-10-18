@@ -1,7 +1,12 @@
 import React from 'react';
+import Layout from '../core/Layout.js';
 
 const Signin = () => (
-  <div>SIGNIN</div>
+  
+    <Layout title="Signin" description="Signin to App" className children>
+      ...
+    </Layout>
+
 )
 
 export default Signin;
