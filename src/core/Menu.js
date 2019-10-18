@@ -1,5 +1,6 @@
 import React, {Fragment } from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router';
+import {Link} from 'react-router-dom';
 import {signout, isAuthenticated} from '../auth';
 
 const isActive = (history, path) => {
@@ -16,6 +17,12 @@ const Menu = ({history}) => (
       <li className="nav-item">
         <Link className="nav-link" style={isActive(history, '/')} to="/">
           Home
+        </Link>
+      </li>
+
+      <li className="nav-item">
+        <Link className="nav-link" style={isActive(history, '/user/dashboard')} to="/user/dashboard">
+          Dashboard
         </Link>
       </li>
 
@@ -36,7 +43,7 @@ const Menu = ({history}) => (
               className="nav-link"
               style={isActive(history, '/signup')}
               to="/signup"
-            >
+            > 
               Signup
             </Link>
           </li>
