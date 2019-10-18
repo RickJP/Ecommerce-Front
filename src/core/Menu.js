@@ -17,11 +17,11 @@ const Menu = ({ history }) => (
       </li>
 
       <li className="nav-item">
-        <Link className="nav-link"  style={isActive(history, '/signin')} to="/signin">Signin</Link>
+        <Link className="nav-link"  style={isActive(history, '/signin')} to="/signin">Sign In</Link>
       </li>
 
       <li className="nav-item">
-      <Link className="nav-link"  style={isActive(history, '/signup')} to="/signup">Signup</Link>
+      <Link className="nav-link"  style={isActive(history, '/signup')} to="/signup">Sign Up</Link>
       </li>
     </ul>
   </div>

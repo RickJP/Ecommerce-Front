@@ -3,7 +3,7 @@ import Layout from '../core/Layout.js';
 
 const Signin = () => (
   
-    <Layout title="Signin" description="Signin to App" className children>
+    <Layout title="Sign In" description="Signin to App" className children>
       ...
     </Layout>
 
