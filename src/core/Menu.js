@@ -1,4 +1,4 @@
-import React, {Fragment } from 'react';
+import React, {Fragment} from 'react';
 import {withRouter} from 'react-router';
 import {Link} from 'react-router-dom';
 import {signout, isAuthenticated} from '../auth';
@@ -19,13 +19,30 @@ const Menu = ({history}) => (
           Home
         </Link>
       </li>
-
-      <li className="nav-item">
-        <Link className="nav-link" style={isActive(history, '/user/dashboard')} to="/user/dashboard">
-          Dashboard
-        </Link>
-      </li>
-
+      {isAuthenticated() && isAuthenticated().user.role === 0 && (
+        <li className="nav-item">
+          <Link
+            className="nav-link"
+            style={isActive(history, '/user/dashboard')}
+            to="/user/dashboard"
+          >
+            Dashboard
+          </Link>
+        </li>
+      )}
+      
+      {isAuthenticated() && isAuthenticated().user.role === 1 && (
+        <li className="nav-item">
+          <Link
+            className="nav-link"
+            style={isActive(history, '/admin/dashboard')}
+            to="/admin/dashboard"
+          >
+            Dashboard
+          </Link>
+        </li>
+      )}
+      
       {!isAuthenticated() && (
         <Fragment>
           <li className="nav-item">
@@ -43,13 +60,12 @@ const Menu = ({history}) => (
               className="nav-link"
               style={isActive(history, '/signup')}
               to="/signup"
-            > 
+            >
               Signup
             </Link>
           </li>
-          </Fragment>
+        </Fragment>
       )}
-
       {isAuthenticated() && (
         <li className="nav-item">
           <span
