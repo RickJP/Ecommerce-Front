@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Layout from '../core/Layout';
 import { Redirect } from 'react-router';
 import {signin, authenticate, isAuthenticated } from '../auth';
