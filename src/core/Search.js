@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Layout from './Layout';
-import {getCategories} from './apiCore.js';
+import {getCategories, list} from './apiCore.js';
 import Card from './Card';
 
 const Search = () => {
@@ -24,29 +24,47 @@ const Search = () => {
     });
   };
 
-  
-
   useEffect(() => {
     loadCategories();
   }, []);
 
-  const searchSubmit = () => {
-
+  const searchData = () => {
+    //console.log(search, category);
+    if (search) {
+      list({search: search || undefined, category: category}).then(res => {
+        if (res.error) {
+          console.log(res.error);
+        } else {
+          setData({...data, results: res, searched: true});
+        }
+      });
+    }
   };
 
-  const handleChange = (type) => {
-
+  const searchSubmit = e => {
+    e.preventDefault();
+    searchData();
   };
+
+  const handleChange = name => e => {
+    setData({...data, [name]: e.target.value, searched: false});
+  };
+
+  const searchedProducts = (results = []) => {
+    return (
+      <div className="row">
+        {results.map((prod, idx) => (<Card key={idx} product={prod} />))}
+    </div>
+    )
+    
+  }
 
   const searchForm = () => (
     <form onSubmit={searchSubmit}>
       <span className="input-group-text">
         <div className="input-group input-group-lg">
           <div className="input-group-prepend">
-            <select
-              className="btn mr-2"
-              onChange={() => handleChange('category')}
-            >
+            <select className="btn mr-2" onChange={handleChange('category')}>
               <option value="All">Pick Category</option>
               {categories.map((cat, idx) => (
                 <option key={idx} value={cat._id}>
@@ -54,25 +72,30 @@ const Search = () => {
                 </option>
               ))}
             </select>
-          </div>  {/*  input-group-prepend */}
+          </div>
+          {/*  input-group-prepend */}
           <input
             type="search"
             className="form-control"
-            onChange={() => handleChange('search')}
+            onChange={handleChange('search')}
             placeholder="Search by name"
           />
-        </div>  {/* input-group-lg */}
+        </div>{' '}
+        {/* input-group-lg */}
         <div className="btn input-group-append" style={{border: 'none'}}>
           <button className="input-group-text">Search</button>
         </div>
-      </span> 
+      </span>
       {/* input-group-text  */}
     </form>
   );
 
   return (
     <div className="row">
-      <div className="container">{searchForm()}</div>
+      <div className="container mb-3">{searchForm()}</div>
+      <div className="container fluid mb-3">
+      {searchedProducts(results)}
+      </div>
     </div>
   );
 };

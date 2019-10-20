@@ -106,7 +106,7 @@ const AddProduct = () => {
       <div className="form-group">
         <label className="text-muted">Description</label>
         <textarea
-          onChange={() => handleChange('description')}
+          onChange={handleChange('description')}
           type="text"
           className="form-control"
           value={description}
