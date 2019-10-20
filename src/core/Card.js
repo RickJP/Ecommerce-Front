@@ -19,7 +19,7 @@ const Card = ({product}) => {
           </Link>
 
           <button className="btn btn-outline-warning mt-2 mb-2">
-            Add to Card
+            Add to Cart
           </button>
         </div>
       </div>
