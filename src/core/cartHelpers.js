@@ -8,7 +8,6 @@ export const addItem = (item, next) => {
       ...item,
       count: 1
     })
-
     // Remove duplicates
     // Build an array from new Set & turn it back into array using Array.from
     // so that later we can re-map it
@@ -25,8 +24,14 @@ export const addItem = (item, next) => {
     next();
   }
 }
-
-
 // JSON.parse() -> to convert JSON to Object
 // JSON.stringify() -> to convert Object to JSON string
 
+export const itemTotal = () => {
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem('cart')) {
+      return JSON.parse(localStorage.getItem('cart')).length;
+    }
+  }
+  return 0;
+}
