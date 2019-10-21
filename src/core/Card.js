@@ -4,7 +4,7 @@ import ShowImage from './ShowImage';
 import moment from 'moment';
 import { addItem } from './cartHelpers';
 
-const Card = ({product, showViewProductButton = true}) => {
+const Card = ({product, showViewProductButton = true, showAddToCartButton = true}) => {
 
   const [redirect, setRedirect] = useState(false);
 
@@ -32,9 +32,12 @@ const Card = ({product, showViewProductButton = true}) => {
     }
   }
 
-  const showAddToCartButton = () => {
+  const showAddToCart = (showAddToCartButton) => {
     return (
-      <button onClick={addToCart} className="btn btn-warning mt-2 mb-2">Add to Cart</button>
+      showAddToCartButton && (
+        <button onClick={addToCart} className="btn btn-warning mt-2 mb-2">Add to Cart</button>
+      )
+      
     );
   };
 
@@ -65,7 +68,7 @@ const Card = ({product, showViewProductButton = true}) => {
 
         {showViewButton(showViewProductButton)}
         
-        {showAddToCartButton()}
+        {showAddToCart(showAddToCartButton)}
       </div>
     </div>
   );
