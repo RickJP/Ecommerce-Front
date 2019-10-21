@@ -43,6 +43,22 @@ export const updateItem = (productId, count) => {
   }
 }
 
+export const removeItem = (productId) => {
+  let cart = [];
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem('cart')) {
+      cart = JSON.parse(localStorage.getItem('cart'));
+    }
+    cart.map((prod, idx) => {
+      if (prod._id === productId) {
+        cart.splice(idx, 1);
+      }
+    })
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+  return cart;
+}
+
 export const itemTotal = () => {
   if (typeof window !== 'undefined') {
     if (localStorage.getItem('cart')) {
