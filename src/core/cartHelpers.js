@@ -27,6 +27,22 @@ export const addItem = (item, next) => {
 // JSON.parse() -> to convert JSON to Object
 // JSON.stringify() -> to convert Object to JSON string
 
+
+export const updateItem = (productId, count) => {
+  let cart = [];
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem('cart')) {
+      cart = JSON.parse(localStorage.getItem('cart'));
+    }
+    cart.map((prod, idx) => {
+      if (prod._id === productId) {
+        cart[idx].count = count;
+      }
+    })
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+}
+
 export const itemTotal = () => {
   if (typeof window !== 'undefined') {
     if (localStorage.getItem('cart')) {
