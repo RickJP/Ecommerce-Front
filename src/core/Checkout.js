@@ -5,9 +5,9 @@ import Card from './Card';
 import { isAuthenticated} from '../auth';
 import {Link} from 'react-router-dom';
 import DropIn from 'braintree-web-drop-in-react';
+import {emptyCart} from './cartHelpers';
 
-
-const Checkout = ({products}) => {
+const Checkout = ({products, setRun = f => f, run = undefined }) => {
 
   const [data, setData] = useState({
     success: false, 
@@ -68,6 +68,13 @@ const Checkout = ({products}) => {
       processPayment(userId, token, paymentData).then(res => {
         setData({...data, success: res.success});
         // empty cart
+        emptyCart(() => {
+          setRun(!run); // update parent state
+          setData({
+            loading: false,
+            success: true
+          });
+        });
         // create order
 
         //console.log(res);

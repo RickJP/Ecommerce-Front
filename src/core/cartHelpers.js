@@ -75,4 +75,11 @@ export const getCart = () => {
     }
   }
   return [];
-}
+};
+
+export const emptyCart = next => {
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('cart');
+    next();
+  }
+};
