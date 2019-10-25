@@ -10,6 +10,7 @@ import {emptyCart} from './cartHelpers';
 const Checkout = ({products, setRun = f => f, run = undefined }) => {
 
   const [data, setData] = useState({
+    loading: false,
     success: false, 
     clientToken: null,
     error: '',
@@ -50,6 +51,8 @@ const Checkout = ({products, setRun = f => f, run = undefined }) => {
   }
 
   const buy = () => {
+    setData({loading: true});
+
     // send the nonce to the server
     // nonce = data.instance.requestPaymentOption
 
@@ -78,7 +81,10 @@ const Checkout = ({products, setRun = f => f, run = undefined }) => {
         // create order
 
         //console.log(res);
-      }).catch(err => console.log(err))
+      }).catch(err => {
+        setData({loading: false});
+        console.log(err)
+      })
     })
     .catch(err => {
       console.log(`dropin error ${err}`);
@@ -93,7 +99,10 @@ const Checkout = ({products, setRun = f => f, run = undefined }) => {
       {data.clientToken !== null && products.length > 0 ? (
         <div>
           <DropIn options={{
-            authorization: data.clientToken
+            authorization: data.clientToken,
+            paypal: {
+              flow: 'vault'
+            }
           }} onInstance={instance => data.instance = instance}/>
           <button onClick={buy} className="btn btn-success btn-block">Pay</button>
         </div>
@@ -107,6 +116,12 @@ const Checkout = ({products, setRun = f => f, run = undefined }) => {
     </div>
   )
 
+  const showLoading = (loading) => (
+    loading && (
+      <h2>Loading...</h2>
+    )
+  )
+
   const showSuccess = success => (
     <div className="alert alert-info" style={{display: success ? '' : 'none'}}>
       Thank You! Your payment was successful
@@ -117,6 +132,7 @@ const Checkout = ({products, setRun = f => f, run = undefined }) => {
   return (
     <div>
       <h2>Total: ${getTotal().toFixed(2)}</h2>
+      {showLoading(data.loading)}
       {showSuccess(data.success)}
       {showError(data.error)}
       {showCheckout()}
