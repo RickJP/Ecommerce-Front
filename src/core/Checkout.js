@@ -61,6 +61,18 @@ const Checkout = ({products, setRun = f => f, run = undefined}) => {
 
   let deliveryAddress = data.address
 
+  const generateId = (length) => {
+    const alphanum = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let id = '';
+    let randVal = 0;
+
+    for (let i = 0; i < length; i++) {
+      randVal = Math.floor(Math.random(alphanum) * Math.floor(alphanum.length))
+      id += alphanum[randVal];
+    }
+    return id;
+ }
+
 
   const buy = () => {
     setData({loading: true});
@@ -83,9 +95,11 @@ const Checkout = ({products, setRun = f => f, run = undefined}) => {
           //setData({...data, success: res.success});
           console.log('RESPONSE IS' + response);
           // create order
+          let transactionID = generateId(20);
+
           const createOrderData = {
             products: products,
-            transaction_id: response.transaction_id,
+            transaction_id: transactionID,
             amount: response.transaction.amount,
             address: deliveryAddress,
           };
