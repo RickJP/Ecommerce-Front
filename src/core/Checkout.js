@@ -81,7 +81,7 @@ const Checkout = ({products, setRun = f => f, run = undefined}) => {
         };
         processPayment(userId, token, paymentData).then(response => {
           //setData({...data, success: res.success});
-   
+          console.log('RESPONSE IS' + response);
           // create order
           const createOrderData = {
             products: products,
