@@ -27,12 +27,21 @@ const Orders = () => {
   const showOrdersLength = () => {
     if (orders.length > 0) {
       return (
-        <h1 className="text-danger display-2">Total orders: {orders.length}</h1>
+        <h3 className="text-danger display-4">Total orders: {orders.length}</h3>
       );
     } else {
-      return <h1 className="text-danger">No Orders!</h1>;
+      return <h3 className="text-danger">No Orders!</h3>;
     }
   };
+
+const  showInput = (key, value) => (
+  <div className="input-group mb-2 mr-sm-2">
+    <div className="input-group-prepend">
+      <div className="input-group-text">{key}</div>
+    </div>
+    <input type="text" value={value} className="form-control" readonly />
+  </div>
+)
 
   return (
     <Layout
@@ -75,6 +84,15 @@ const Orders = () => {
                 <h3 className="mt-4 mb4 font-italic">
                   Total products in the order: {o.products.length}
                 </h3>
+
+                {o.products.map((p, pIdx) => (
+                  <div className="mb-4" key={pIdx} style={{padding: '20px', border: '1px solid indigo'}}>
+                    {showInput('Product name', p.name)}
+                    {showInput('Product price', p.price)}
+                    {showInput('Product total', p.count)}
+                    {showInput('Product Id', p._id)}
+                  </div>
+                ))}
               </div>
             );
           })}
